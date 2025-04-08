@@ -1,0 +1,15 @@
+{
+    "configurations":{
+        "ui":{
+            "env": "production",
+            "appLocation": "./",
+            "outputLocation": "build",
+            "start": {
+                "outputLocation": "build"
+            },
+            "deploy": {
+                "outputLocation": "build"
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "medusa-connector",
+  "version": "1.0.0",
+  "description": "Alpha Solutions Medusa Connector App for Contentstack",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "(cd api && yarn) && (cd ui && yarn)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alphasolutionsrepo/medusa-connector.git"
+  },
+  "author": "Alpha Solutions",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alphasolutionsrepo/medusa-connector/issues"
+  },
+  "homepage": "https://github.com/alphasolutionsrepo/medusa-connector#readme",
+  "devDependencies": {
+    "husky": "^4.3.8",
+    "prettier": "^2.4.1",
+    "rimraf": "^3.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cd ui && rimraf build && npm run precommit && cd ../api && rimraf build && npm run precommit"
+    }
+  }
+}
