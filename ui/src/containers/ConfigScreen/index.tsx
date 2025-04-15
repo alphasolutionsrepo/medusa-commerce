@@ -24,6 +24,7 @@ import { TypeAppSdkConfigState } from "../../common/types";
 /* Import our CSS */
 import "./styles.scss";
 import localeTexts from "../../common/locale/en-us";
+import { request } from "../../services";
 
 const ConfigScreen: React.FC = function () {
   // entire configuration object returned from configureConfigScreen
@@ -31,6 +32,7 @@ const ConfigScreen: React.FC = function () {
   // config objs to be saved in configuration
   const saveInConfig: any = {};
   const [appSdkConfigData, setAppSdk] = useState<any>(null);
+  const [showConnectionError, setShowConnectionError] = useState(false);
 
   Object.keys(configInputFields)?.forEach((field: any) => {
     if (configInputFields?.[field]?.saveInConfig)
@@ -70,6 +72,18 @@ const ConfigScreen: React.FC = function () {
     setInstallationData: (): any => { },
     appSdkInitialized: false,
   });
+
+  const validCredentials = async (config: any) => {
+    if (config.MedusaBackendUrl && config.MedusaPublishableKey) {
+      const response = await request(config, "product");
+      if (response?.error) {
+        setShowConnectionError(true);
+        return false
+      }
+    }
+
+    return true
+  }
 
   const isConfigSensitive = (name: string) => {
     let isSensitive = false;
@@ -201,15 +215,25 @@ const ConfigScreen: React.FC = function () {
         {}
       );
 
+      let isValid = false
+      let areCredentialsValid = false
       if (typeof state.setInstallationData !== "undefined") {
-        if (!!appSdkConfigData)
-          appSdkConfigData.setValidity(!Object.values(state.installationData.configuration || {}).includes(""))
+
+        isValid = (!Object.values(state.installationData.configuration || {}).includes(""))
 
         await state.setInstallationData({
           ...state.installationData,
           configuration: newConfiguration,
         });
+
+        areCredentialsValid = await validCredentials(state.installationData?.configuration)
       }
+
+      if (!!appSdkConfigData)
+        appSdkConfigData.setValidity(isValid && areCredentialsValid);
+
+      setShowConnectionError(!areCredentialsValid)
+
       return true;
     },
     [state.setInstallationData, state.installationData]
@@ -272,9 +296,13 @@ const ConfigScreen: React.FC = function () {
                 onChange={updateConfig}
                 data-testid="text_input"
               />
+              
               <InstructionText data-testid="text_instruction">
                 {objValue?.instructionText}
               </InstructionText>
+              {showConnectionError && (
+                <div className="error">{objValue?.errorText}</div>
+              )}
             </Field>
             <Line type="dashed" />
           </div>

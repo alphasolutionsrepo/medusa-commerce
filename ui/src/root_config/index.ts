@@ -104,11 +104,12 @@ const configureConfigScreen: any = () =>
   MedusaBackendUrl: {
     type: "textInputFields",
     labelText: "Medusa Backend URL",
-    helpText: "The URL of your Medusa Backend",
+    helpText: "The domain of the URL you login to your Medusa Backend",
     placeHolderText: "Ex. https://my-medusa-backend.com",
     instructionText: "Enter your Medusa Backend URL",
     saveInConfig: true,
     isSensitive: false,
+    errorText: "Unable to connect to Medusa instance. Please check the Medusa Backend URL"
   },
   MedusaPublishableKey: {
     type: "textInputFields",
@@ -118,6 +119,7 @@ const configureConfigScreen: any = () =>
     instructionText: "Enter your Medusa Publishable Key",
     saveInConfig: true,
     isSensitive: true,
+    errorText: "Unable to connect to Medusa instance. Please check the Medusa Publishable Key"
   }
 });
 
@@ -202,51 +204,71 @@ const getCustomKeys = () =>
       value: "variants",
       searchLabel: "variants",
     },
-    // {
-    //   label: "description",
-    //   value: "description",
-    //   searchLabel: "description",
-    // },
-    // {
-    //   label: "gift_wrapping_options_list",
-    //   value: "gift_wrapping_options_list",
-    //   searchLabel: "gift_wrapping_options_list",
-    // },
-    // {
-    //   label: "images",
-    //   value: "images",
-    //   searchLabel: "images",
-    // },
-    // {
-    //   label: "meta_keywords",
-    //   value: "meta_keywords",
-    //   searchLabel: "meta_keywords",
-    // },
-    // {
-    //   label: "price",
-    //   value: "price",
-    //   searchLabel: "price",
-    // },
-    // {
-    //   label: "price_hidden_label",
-    //   value: "price_hidden_label",
-    //   searchLabel: "price_hidden_label",
-    // },
-    // {
-    //   label: "primary_image",
-    //   value: "primary_image",
-    //   searchLabel: "primary_image",
-    // },
-    // {
-    //   label: "product_tax_code",
-    //   value: "product_tax_code",
-    //   searchLabel: "product_tax_code",
-    // },
-    // {
-    //   label: "width",
-    //   value: "width",
-    //   searchLabel: "width",
-    // },
+    {
+      label: "options",
+      value: "options",
+      searchLabel: "options",
+    },
+    {
+      label: "created_at",
+      value: "created_at",
+      searchLabel: "created_at",
+    },
+    {
+      label: "updated_at",
+      value: "updated_at",
+      searchLabel: "updated_at",
+    },
+    {
+      label: "tags",
+      value: "tags",
+      searchLabel: "tags",
+    },
+    {
+      label: "collection",
+      value: "collection",
+      searchLabel: "collection",
+    },
+    {
+      label: "collection_id",
+      value: "collection_id",
+      searchLabel: "collection_id",
+    },
+    {
+      label: "type",
+      value: "type",
+      searchLabel: "type",
+    },
+    {
+      label: "type_id",
+      value: "type_id",
+      searchLabel: "type_id",
+    },
+    {
+      label: "height",
+      value: "height",
+      searchLabel: "height",
+    },
+    {
+      label: "width",
+      value: "width",
+      searchLabel: "width",
+    },
+    {
+      label: "length",
+      value: "length",
+      searchLabel: "length",
+    },
+    {
+      label: "weight",
+      value: "weight",
+      searchLabel: "weight",
+    },
+    {
+      label: "material",
+      value: "material",
+      searchLabel: "material",
+    }
   ];
 
 // this function maps the corresponding keys to your product object that gets saved in custom field
@@ -306,7 +328,7 @@ const getProductSelectorColumns = (config?: any) =>
       default: false,
       disableSortBy: true, // disable sorting of the table with this column
       addToColumnSelector: true, // specifies whether you want to add this column to column selector in the table
-      columnWidthMultiplier: 0.8, // multiplies this number with one unit of column with.
+      columnWidthMultiplier: 2.5, // multiplies this number with one unit of column with.
       // 0.x means smaller than one specified unit by 0.x times
       // x means bigger that one specified unit by x times
     },

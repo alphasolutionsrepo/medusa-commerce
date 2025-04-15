@@ -8,9 +8,10 @@ export default {
   },
   configPage: {
     errorInADK: "Something Went Wrong While Loading App SDK",
+    connectionError: "Unable to connect to Medusa instance. Please check the Medusa Backend URL and Medusa Publishable Key.",
     saveInEntry: {
       label: "Save In Entry",
-      help: "You can select different ways to store your ecommerce data.",
+      help: "You can select different ways to store your Medusa data.",
       placeholder: "Enter the structure of data you want to save in the entry",
       instruction1:
         "If you select the ''Custom Fields'' option, you can select the structure of the data you want to save in the entry. If 'All Fields' option is selected, you might be able to add limited products in the custom field depending on the size of the data (Refer to the ",

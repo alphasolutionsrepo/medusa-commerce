@@ -25,6 +25,7 @@ node_modules/
 .eslintcache
 
 .env
+.env.production
 .npmrc
 .dccache
 api/.env

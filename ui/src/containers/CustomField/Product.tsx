@@ -122,11 +122,11 @@ const Product: React.FC<Props> = function ({ product, remove, config }) {
                 <div className="divider" />
                 <div className="product-body">
                   <span className="product-name">{name}</span>
-                  {price && (
+                  {/* {price && (
                     <span className="product-name">
                       {localeTexts.customField.listViewTable.price}: {price}
                     </span>
-                  )}
+                  )} */}
                   <span
                     className="product-desc"
                     dangerouslySetInnerHTML={{
