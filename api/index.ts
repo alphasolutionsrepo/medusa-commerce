@@ -7,6 +7,7 @@ import {
   filterByCategory,
 } from "./handler";
 import root_config from "./root_config";
+import axios from "axios";
 
 const _isEmpty: any = (val: any) =>
   val === undefined ||
@@ -54,6 +55,19 @@ const handler: any = async ({ queryStringParameters: query, body }: any) => {
       resErr.message = constants.HTTP_ERROR_TEXTS.QUERY_MISSING;
 
       throw resErr;
+    }
+
+    if (body.credTest) {
+      const response = await axios({ url: `${body.config.MedusaBackendUrl}/store/products`, method: "GET", headers: root_config.getHeaders(body.config) })
+        .catch((e: any) => {
+          if (e.response?.status === 400) {
+            return { status: 400 }
+          }
+          else return { status: 404 }
+        });
+      return {
+        statusCode: response.status
+      }
     }
 
     /** Below block of code is just for illustration.

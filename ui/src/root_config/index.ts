@@ -119,7 +119,7 @@ const configureConfigScreen: any = () =>
     instructionText: "Enter your Medusa Publishable Key",
     saveInConfig: true,
     isSensitive: true,
-    errorText: "Unable to connect to Medusa instance. Please check the Medusa Publishable Key"
+    errorText: "Invalid Publishable Key. Please check the Medusa Publishable Key"
   }
 });
 
@@ -179,6 +179,16 @@ const generateSearchApiUrlAndData = (
 // Custom field to be added for config screen
 const getCustomKeys = () =>
   <KeyOption[]>[
+    {
+      label: "id",
+      value: "id",
+      searchLabel: "id",
+    },
+    {
+      label: "title",
+      value: "title",
+      searchLabel: "title",
+    },
     {
       label: "description",
       value: "description",
@@ -263,6 +273,41 @@ const getCustomKeys = () =>
       label: "weight",
       value: "weight",
       searchLabel: "weight",
+    },
+    {
+      label: "material",
+      value: "material",
+      searchLabel: "material",
+    },
+    {
+      label: "subtitle",
+      value: "subtitle",
+      searchLabel: "subtitle",
+    },
+    {
+      label: "is_giftcard",
+      value: "is_giftcard",
+      searchLabel: "is_giftcard",
+    },
+    {
+      label: "discountable",
+      value: "discountable",
+      searchLabel: "discountable",
+    },
+    {
+      label: "hs_code",
+      value: "hs_code",
+      searchLabel: "hs_code",
+    },
+    {
+      label: "origin_country",
+      value: "origin_country",
+      searchLabel: "origin_country",
+    },
+    {
+      label: "mid_code",
+      value: "mid_code",
+      searchLabel: "mid_code",
     },
     {
       label: "material",

@@ -79,13 +79,14 @@ const ListItem: React.FC<Props> = function ({
           <div style={{ overflow: "visible", height: "0px" }}>
             <div className="Table__head  ">
               <div role="row" className="Table__head__row ">
+                {type === "product" ?
                 <div
                   aria-colspan={1}
                   role="columnheader"
                   className="Table__head__column  first-child"
                 >
                   {localeTexts.customField.listViewTable.imgCol}
-                </div>
+                </div> : ""}
                 <div
                   aria-colspan={1}
                   role="columnheader"

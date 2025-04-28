@@ -1,5 +1,6 @@
 /* Import React modules */
 import React, { useCallback, useEffect, useState } from "react";
+import axios from "axios";
 import CryptoJS from "crypto-js";
 /* ContentStack Modules */
 // For all the available venus components, please refer below doc
@@ -24,7 +25,6 @@ import { TypeAppSdkConfigState } from "../../common/types";
 /* Import our CSS */
 import "./styles.scss";
 import localeTexts from "../../common/locale/en-us";
-import { request } from "../../services";
 
 const ConfigScreen: React.FC = function () {
   // entire configuration object returned from configureConfigScreen
@@ -32,7 +32,15 @@ const ConfigScreen: React.FC = function () {
   // config objs to be saved in configuration
   const saveInConfig: any = {};
   const [appSdkConfigData, setAppSdk] = useState<any>(null);
-  const [showConnectionError, setShowConnectionError] = useState(false);
+  const [showBackendUrlError, setShowBackendUrlError] = useState(false);
+  const [showPublishableKeyError, setShowPublishableKeyError] = useState(false);
+
+  useEffect(() => {
+      if(showBackendUrlError)
+        appSdkConfigData.setValidity(false, {message: configInputFields.MedusaBackendUrl.errorText})
+      if(showPublishableKeyError)
+        appSdkConfigData.setValidity(false, {message: configInputFields.MedusaPublishableKey.errorText})
+  }, [showBackendUrlError, showPublishableKeyError]);
 
   Object.keys(configInputFields)?.forEach((field: any) => {
     if (configInputFields?.[field]?.saveInConfig)
@@ -75,13 +83,29 @@ const ConfigScreen: React.FC = function () {
 
   const validCredentials = async (config: any) => {
     if (config.MedusaBackendUrl && config.MedusaPublishableKey) {
-      const response = await request(config, "product");
-      if (response?.error) {
-        setShowConnectionError(true);
+      const response = await axios({
+        url: `${process.env.REACT_APP_API_URL}`,
+        method: 'POST',
+        data: { credTest: true, config },
+        headers: {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          "Access-Control-Allow-Origin": "*",
+        },
+      }).catch((e: any) => e.response?.status);
+
+      if (response === 400) {
+        setShowPublishableKeyError(true)
         return false
       }
-    }
+      if (response === 404) {
+        setShowBackendUrlError(true)
+        return false
+      }
 
+      setShowPublishableKeyError(false)
+      setShowBackendUrlError(false)
+
+    }
     return true
   }
 
@@ -165,7 +189,7 @@ const ConfigScreen: React.FC = function () {
             newObj || installationDataFromSDK
           );
           const isValid = !Object.values(installationDataFromSDK.configuration || {}).includes("")
-          sdkConfigData.setValidity(isValid)
+          sdkConfigData.setValidity(isValid);
           setState({
             ...state,
             installationData: installationDataOfSdk,
@@ -232,8 +256,6 @@ const ConfigScreen: React.FC = function () {
       if (!!appSdkConfigData)
         appSdkConfigData.setValidity(isValid && areCredentialsValid);
 
-      setShowConnectionError(!areCredentialsValid)
-
       return true;
     },
     [state.setInstallationData, state.installationData]
@@ -296,11 +318,11 @@ const ConfigScreen: React.FC = function () {
                 onChange={updateConfig}
                 data-testid="text_input"
               />
-              
+
               <InstructionText data-testid="text_instruction">
                 {objValue?.instructionText}
               </InstructionText>
-              {showConnectionError && (
+              {(((objKey === 'MedusaBackendUrl' && showBackendUrlError) || (objKey === 'MedusaPublishableKey' && showPublishableKeyError))) && (
                 <div className="error">{objValue?.errorText}</div>
               )}
             </Field>

@@ -3,7 +3,6 @@ import {
   ActionTooltip,
   cbModal,
   Icon,
-  Tooltip,
 } from "@contentstack/venus-components";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -12,7 +11,6 @@ import localeTexts from "../../common/locale/en-us";
 import constants from "../../common/constants";
 import DeleteModal from "./DeleteModal";
 import rootConfig from "../../root_config";
-import NoImg from "../../assets/NoImg.svg";
 
 const DraggableListItemCategory: React.FC<Props> = function ({
   product,
@@ -80,36 +78,7 @@ const DraggableListItemCategory: React.FC<Props> = function ({
     },
   ];
 
-  const getImageUrl = (category: any) => {
-    let imageSrc = category?.c_slotBannerImage || category?.image;
-
-    if (!imageSrc && category?.c_headerMenuBanner) {
-      imageSrc = category?.c_headerMenuBanner
-        ?.match(/(https?:\/\/[^ ]*)/)[1]
-        ?.replace(/"/g, "");
-    }
-    return imageSrc ? (
-      <div className="custom-field-product-image">
-        <img src={imageSrc} alt={category?.name || category?.productName} />
-      </div>
-    ) : (
-      <div className="custom-field-product-image">
-        <Tooltip
-          content={localeTexts.selectorPage.ImageTooltip.label}
-          position="top"
-          showArrow={false}
-          variantType="light"
-          type="secondary"
-        >
-          <img
-            src={NoImg}
-            alt={localeTexts.selectorPage.noImageAvailable}
-            className="custom-field-product-image"
-          />
-        </Tooltip>
-      </div>
-    );
-  };
+  
 
   return (
     <div
@@ -125,9 +94,6 @@ const DraggableListItemCategory: React.FC<Props> = function ({
         ""
       ) : (
         <ActionTooltip list={onHoverActionList}>
-          <div role="cell" className="Table__body__column">
-            {getImageUrl(product) || product?.image}
-          </div>
           <div role="cell" className="Table__body__column">
             {product?.name || product?.productName}
           </div>
