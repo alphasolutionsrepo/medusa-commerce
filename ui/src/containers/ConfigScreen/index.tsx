@@ -34,13 +34,16 @@ const ConfigScreen: React.FC = function () {
   const [appSdkConfigData, setAppSdk] = useState<any>(null);
   const [showBackendUrlError, setShowBackendUrlError] = useState(false);
   const [showPublishableKeyError, setShowPublishableKeyError] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(true);
 
   useEffect(() => {
-      if(showBackendUrlError)
-        appSdkConfigData.setValidity(false, {message: configInputFields.MedusaBackendUrl.errorText})
-      if(showPublishableKeyError)
-        appSdkConfigData.setValidity(false, {message: configInputFields.MedusaPublishableKey.errorText})
-  }, [showBackendUrlError, showPublishableKeyError]);
+    if (!isFormValid) appSdkConfigData?.setValidity(false)
+    else if (showBackendUrlError)
+      appSdkConfigData?.setValidity(false, { message: configInputFields.MedusaBackendUrl.errorText })
+    else if (showPublishableKeyError)
+      appSdkConfigData?.setValidity(false, { message: configInputFields.MedusaPublishableKey.errorText })
+    else appSdkConfigData?.setValidity(true)
+  }, [showBackendUrlError, showPublishableKeyError, isFormValid]);
 
   Object.keys(configInputFields)?.forEach((field: any) => {
     if (configInputFields?.[field]?.saveInConfig)
@@ -95,10 +98,14 @@ const ConfigScreen: React.FC = function () {
 
       if (response === 400) {
         setShowPublishableKeyError(true)
+        setShowBackendUrlError(false)
+
         return false
       }
       if (response === 404) {
         setShowBackendUrlError(true)
+        setShowPublishableKeyError(false)
+
         return false
       }
 
@@ -189,7 +196,7 @@ const ConfigScreen: React.FC = function () {
             newObj || installationDataFromSDK
           );
           const isValid = !Object.values(installationDataFromSDK.configuration || {}).includes("")
-          sdkConfigData.setValidity(isValid);
+          setIsFormValid(isValid)
           setState({
             ...state,
             installationData: installationDataOfSdk,
@@ -244,17 +251,18 @@ const ConfigScreen: React.FC = function () {
       if (typeof state.setInstallationData !== "undefined") {
 
         isValid = (!Object.values(state.installationData.configuration || {}).includes(""))
+        setIsFormValid(isValid)
 
         await state.setInstallationData({
           ...state.installationData,
           configuration: newConfiguration,
         });
 
-        areCredentialsValid = await validCredentials(state.installationData?.configuration)
+        await validCredentials(state.installationData?.configuration)
       }
 
-      if (!!appSdkConfigData)
-        appSdkConfigData.setValidity(isValid && areCredentialsValid);
+      // if (!!appSdkConfigData)
+      //   appSdkConfigData.setValidity(isValid && areCredentialsValid);
 
       return true;
     },
