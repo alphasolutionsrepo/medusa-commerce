@@ -183,11 +183,13 @@ const getCustomKeys = () =>
       label: "id",
       value: "id",
       searchLabel: "id",
+      isDisabled: true,
     },
     {
       label: "title",
       value: "title",
       searchLabel: "title",
+      isDisabled: true,
     },
     {
       label: "description",
