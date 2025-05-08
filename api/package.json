@@ -1,5 +1,5 @@
 {
-  "name": "medusa-connector-api",
+  "name": "medusa-commerce-api",
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {

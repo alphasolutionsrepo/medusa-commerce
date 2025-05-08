@@ -52,7 +52,7 @@ Storing dynamic user data in the root config enables centralization, allowing th
 
 # Screenshots
 ### Product selector modal
-![alt text](https://raw.githubusercontent.com/alphasolutionsrepo/medusa-connector/refs/heads/main/screenshots/selector.png)
+![alt text](https://raw.githubusercontent.com/alphasolutionsrepo/medusa-commerce/refs/heads/main/screenshots/selector.png)
 
 ### Product custom field
-![alt text](https://raw.githubusercontent.com/alphasolutionsrepo/medusa-connector/refs/heads/main/screenshots/customfield.png)
+![alt text](https://raw.githubusercontent.com/alphasolutionsrepo/medusa-commerce/refs/heads/main/screenshots/customfield.png)

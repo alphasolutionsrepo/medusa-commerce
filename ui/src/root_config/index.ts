@@ -60,7 +60,7 @@ const verifyAppSigning = async (app_token: any): Promise<boolean> => {
 
 // Please refer to the doc for getting more information on each ecommerceEnv fields/keys.
 const ecommerceEnv: EcommerceEnv = {
-  REACT_APP_NAME: "medusa-connector",
+  REACT_APP_NAME: "medusa-commerce",
   SELECTOR_PAGE_LOGO: Logo,
   APP_ENG_NAME: "Medusa Commerce",
   UNIQUE_KEY: {
