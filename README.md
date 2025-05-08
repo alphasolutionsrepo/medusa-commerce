@@ -1,5 +1,5 @@
-# Alpha Solutions Medusa Connector App for Contentstack
-The Alpha Solutions Medusa Connector app allows you to connect your Medusa ecommerce instance to a Contentstack stack and provides custom fields to associate Medusa products and product categories to content entries.
+# Alpha Solutions Medusa Commerce App for Contentstack
+The Alpha Solutions Medusa Commerce app allows you to connect your Medusa ecommerce instance to a Contentstack stack and provides custom fields to associate Medusa products and product categories to content entries.
 
 This app was built using the [Contentstack Marketplace ECOMMERCE App Boilerplate](https://github.com/contentstack/marketplace-ecomm-boilerplate-app)
 

@@ -62,7 +62,7 @@ const verifyAppSigning = async (app_token: any): Promise<boolean> => {
 const ecommerceEnv: EcommerceEnv = {
   REACT_APP_NAME: "medusa-connector",
   SELECTOR_PAGE_LOGO: Logo,
-  APP_ENG_NAME: "Medusa Connector",
+  APP_ENG_NAME: "Medusa Commerce",
   UNIQUE_KEY: {
     product: "id",
     category: "id",
