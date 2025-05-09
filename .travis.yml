@@ -1,0 +1,10 @@
+language: csharp
+mono: latest
+solution: MySolution.sln
+
+install:
+  - nuget restore MySolution.sln
+
+script:
+  - msbuild /p:Configuration=Release MySolution.sln
+  - nunit-console MyProject.Tests/bin/Release/MyProject.Tests.dll
